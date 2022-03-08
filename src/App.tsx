@@ -4,6 +4,12 @@ import "./styles.css";
 import abi from "./abi";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+declare global {
+  interface Window {
+    ethereum: any;
+  }
+}
+
 const ENABLE_QUBIC_SDK = true;
 const CHAIN_ID = 4;
 const MINT_PRICE = "0.18";
@@ -16,9 +22,9 @@ const globalEthereumProvider = ENABLE_QUBIC_SDK
       apiSecret: "API_SECRET",
       chainId: CHAIN_ID,
       infuraProjectId: INFURA_PROJECT_ID,
-      enableIframe: false
+      enableIframe: false,
     })
-  : (window as any).ethereum;
+  : window.ethereum;
 
 export default function App() {
   const providerRef = useRef<ethers.providers.Web3Provider | null>(null);
@@ -33,7 +39,7 @@ export default function App() {
       setIsConnected(false);
       setSigner(null);
       providerRef.current?.send("wallet_switchEthereumChain", [
-        { chainId: ethers.utils.hexlify(CHAIN_ID) }
+        { chainId: ethers.utils.hexlify(CHAIN_ID) },
       ]);
 
       return;
@@ -62,7 +68,7 @@ export default function App() {
 
     const accounts = await providerRef.current.send("eth_requestAccounts", []);
     console.log({
-      accounts
+      accounts,
     });
 
     const network = await providerRef.current.getNetwork();
@@ -84,7 +90,7 @@ export default function App() {
 
     // nftContract.connect(signer).mint(ethers.BigNumber.from(nftAmount));
     nftContract.mint(ethers.BigNumber.from(nftAmount), {
-      value: ethers.utils.parseEther(MINT_PRICE).mul(nftAmount)
+      value: ethers.utils.parseEther(MINT_PRICE).mul(nftAmount),
     });
   }, [nftAmount, signer]);
 
