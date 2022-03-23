@@ -18,8 +18,8 @@ const INFURA_PROJECT_ID = "9aa3d95b3bc440fa88ea12eaa4456161";
 
 const globalEthereumProvider = ENABLE_QUBIC_SDK
   ? new QubicProvider({
-      apiKey: "API_KEY",
-      apiSecret: "API_SECRET",
+      apiKey: "",
+      apiSecret: "",
       chainId: CHAIN_ID,
       infuraProjectId: INFURA_PROJECT_ID,
       enableIframe: false,
