@@ -88,9 +88,9 @@ export default function App() {
     // This can be an address or an ENS name
     const nftContract = new ethers.Contract(NFT_ADDRESS, abi, signer);
 
-    // nftContract.connect(signer).mint(ethers.BigNumber.from(nftAmount));
     nftContract.mint(ethers.BigNumber.from(nftAmount), {
       value: ethers.utils.parseEther(MINT_PRICE).mul(nftAmount),
+      gasLimit: "0x0",
     });
   }, [nftAmount, signer]);
 
