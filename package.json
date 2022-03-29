@@ -5,10 +5,10 @@
   "keywords": [],
   "main": "src/index.tsx",
   "dependencies": {
-    "@qubic-js/browser": "1.0.9",
-    "@qubic-js/core": "1.0.9",
+    "@qubic-js/browser": "1.0.11",
+    "@qubic-js/core": "1.0.11",
     "ethers": "5.5.4",
-    "patch-package": "^6.4.7",
+    "query-string": "^7.1.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-scripts": "^5.0.0"
@@ -25,7 +25,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "postinstall": "patch-package",
     "deploy": "surge ./build large-ear.surge.sh"
   },
   "browserslist": [

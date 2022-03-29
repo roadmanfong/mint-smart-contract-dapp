@@ -1,8 +1,10 @@
 import { ethers } from "ethers";
 import QubicProvider from "@qubic-js/browser";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import "./styles.css";
 import abi from "./abi";
-import { useCallback, useEffect, useRef, useState } from "react";
+import getApiConfigFromUrl from "./getApiConfigFromUrl";
 
 declare global {
   interface Window {
@@ -16,13 +18,15 @@ const MINT_PRICE = "0.18";
 const NFT_ADDRESS = "0x366146057c41B0C4147F56c48675a3519917f6c8";
 const INFURA_PROJECT_ID = "9aa3d95b3bc440fa88ea12eaa4456161";
 
+const { apiKey, apiSecret } = getApiConfigFromUrl();
+
 const globalEthereumProvider = ENABLE_QUBIC_SDK
   ? new QubicProvider({
-      apiKey: "",
-      apiSecret: "",
+      apiKey,
+      apiSecret,
       chainId: CHAIN_ID,
       infuraProjectId: INFURA_PROJECT_ID,
-      enableIframe: false,
+      enableIframe: true,
     })
   : window.ethereum;
 
@@ -125,6 +129,16 @@ export default function App() {
         </>
       ) : (
         <input type="button" value="Connect" onClick={connect} />
+      )}
+
+      {ENABLE_QUBIC_SDK && (!apiKey || !apiSecret) && (
+        <p>
+          <span>Put api key and api Secret in url and try again</span>
+          <div>
+            {window.location.href.replace(window.location.search, "")}
+            ?k=yourKey&s=yourSecret
+          </div>
+        </p>
       )}
     </div>
   );
